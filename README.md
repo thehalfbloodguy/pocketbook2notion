@@ -8,7 +8,7 @@ A project to sync notes from Pocketbook reader to Notion database
    * database id
    * path to notes on your device while it is connected to your computer
 4. Connect the reader to your computer in "PC Link" mode
-5. Install requirements & run "python main.py"
+5. Install requirements & run `python main.py`
 
 ### TODOs
 * leave only necessary headers
@@ -24,5 +24,9 @@ A project to sync notes from Pocketbook reader to Notion database
 * prettify README
 * does not make sync file invisible on reader?
 * error handling
+* support for all OS (add Windows, Mac)
 * add links to Usage section
 * different books can have the same name & cause collisions if matched only by name
+* if you export notes & there already is a page for that book - it adds (n) at the end - take it into account
+* turn quote block into "quote" type
+* book structure detection (main formats: fb2, epub) & insert notes according to it
