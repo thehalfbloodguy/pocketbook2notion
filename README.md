@@ -1,7 +1,7 @@
 # pocketbook2notion
 A project to sync notes from Pocketbook reader to Notion database
 
-###Usage
+### Usage
 1. Export notes to internal storage
 2. Create a secret.txt file with Notion secret token alongside other project files
 3. Modify config.json to contain your:
