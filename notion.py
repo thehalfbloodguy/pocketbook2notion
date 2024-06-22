@@ -34,6 +34,7 @@ class Database():
 
     def createPage(self, title, notes, headers):
         # TODO: add 'book' type, add vertical bar near a high light (different child block type?)
+        # TODO: handle cases over 100 notes
         createUrl = 'https://api.notion.com/v1/pages'
         children = []
         for i in range(len(notes)):

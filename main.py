@@ -4,6 +4,8 @@ import os
 from notion import Database, Page
 from pocketbook import NotesPage
 
+MAX_NOTE_LENGTH = 2000
+MAX_BATCH_SIZE = 100
 
 if __name__ == "__main__":
 
@@ -38,9 +40,17 @@ if __name__ == "__main__":
             page_blocks = response.json()['results']
             unsynced_notes = list(filter(lambda x: x.id not in synced_notes[pb_book_name], book_page.notes))
             for note in unsynced_notes:
-                page.add_child(note, HEADERS)
-                synced_notes[pb_book_name].append(note.id)
+                if len(note.text) < MAX_NOTE_LENGTH: # add splitting if it is >= MAX_NOTE_LENGTH
+                    page.add_child(note, HEADERS)
+                    synced_notes[pb_book_name].append(note.id)
         else:
-            response = db.createPage(pb_book_name, book_page.notes, HEADERS)
-            synced_notes[pb_book_name] = [note.id for note in book_page.notes]
+            filtered_notes = list()
+            for note in book_page.notes:
+                if len(note.text) < MAX_NOTE_LENGTH:
+                    filtered_notes.append(note)
+            if len(filtered_notes) > MAX_BATCH_SIZE:
+                filtered_notes = filtered_notes[:MAX_BATCH_SIZE]
+            response = db.createPage(pb_book_name, filtered_notes, HEADERS)
+            if response.status_code == 200:
+                synced_notes[pb_book_name] = [note.id for note in book_page.notes]
     json.dump(synced_notes, open(f"{PB_NOTES_DIR}/.sync_file.json", "w"))

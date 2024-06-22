@@ -15,9 +15,9 @@ class NotesPage():
 
     def parse(self):
         # TODO: remove div_class?
-        with open(self.path) as HTMLFile:
+        with open(self.path, encoding='utf-8') as HTMLFile:
             index = HTMLFile.read()
-            soup = BeautifulSoup(index, 'lxml')
+            soup = BeautifulSoup(index, features="html.parser")
             divs = soup.find_all('div', class_=re.compile("bookmark"))
             self.notes = []
             for div in divs:
