@@ -30,3 +30,4 @@ A project to sync notes from Pocketbook reader to Notion database
 * if you export notes & there already is a page for that book - it adds (n) at the end - take it into account
 * turn quote block into "quote" type
 * book structure detection (main formats: fb2, epub) & insert notes according to it
+* split notes over 2000 symbols in length

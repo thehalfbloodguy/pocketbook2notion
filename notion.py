@@ -32,6 +32,32 @@ class Database():
         response = requests.request("GET", self.url, headers=headers)
         return response
 
+    def createEmptyPage(self, title, headers):
+        createUrl = 'https://api.notion.com/v1/pages'
+
+        newPageData = {
+            "parent": {"database_id": self.id},
+            "properties": {
+                "Name": {
+                    "title": [{
+                            "text": {
+                                "content": title
+                            }
+                        }]
+                }
+            }
+        }
+        data = json.dumps(newPageData)
+
+        headers = copy.deepcopy(headers)
+        headers.update({
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        })
+
+        response = requests.request("POST", createUrl, headers=headers, data=data)
+        return response
+
     def createPage(self, title, notes, headers):
         # TODO: add 'book' type, add vertical bar near a high light (different child block type?)
         # TODO: handle cases over 100 notes
