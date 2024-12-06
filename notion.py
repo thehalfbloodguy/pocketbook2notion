@@ -112,10 +112,10 @@ class Block():
         response = requests.request("GET", url, headers=headers)
         return response
 
-    def add_child(self, note, headers):
+    def add_quote_child(self, note, headers):
         text_block = {
-            "type": "paragraph",
-            "paragraph": {
+            "type": "quote",
+            "quote": {
                 "rich_text": [{
                     "type": "text",
                     "text": {

@@ -5,7 +5,7 @@ import os
 from collections import defaultdict
 
 from notion import Database, Page
-from pocketbook import NotesPage
+from pocketbook import NotesPage, find_book_by_name, parse_book_structure
 
 MAX_NOTE_LENGTH = 2000
 MAX_BATCH_SIZE = 100
@@ -21,6 +21,7 @@ if __name__ == "__main__":
     with open('config.json') as config_file:
         config = json.load(config_file)
         DATABASE_ID = config['database_id']
+        PB_BOOKS_DIR = config['pb_books_dir']
         PB_NOTES_DIR = config['pb_notes_dir']
 
     pb_notes_pagenames = os.listdir(PB_NOTES_DIR)
@@ -37,9 +38,15 @@ if __name__ == "__main__":
     db_page_map = {res['properties']['Name']['title'][0]['plain_text']: res['id'] for res in results}
     for pb_notes_pagename in pb_notes_pagenames:
         book_name = os.path.splitext(pb_notes_pagename)[0]
-        if book_name not in db_page_map:
-            response = db.createEmptyPage(book_name, HEADERS)
-
+        book_path = find_book_by_name(PB_BOOKS_DIR, book_name)
+        book_structure = parse_book_structure(book_path)
+        print(book_structure)
+        print('----------------')
+        time.sleep(10)
+        #if book_name not in db_page_map:
+        #    response = db.createEmptyPage(book_name, HEADERS)
+    time.sleep(20)
+    '''
     # Add unsynced notes to book pages in Notion database
     time.sleep(0.1)
     response = db.query(HEADERS)
@@ -54,8 +61,9 @@ if __name__ == "__main__":
         page_blocks = response.json()['results']
         unsynced_notes = list(filter(lambda x: x.id not in synced_notes[pb_notes_pagename], book_page.notes))
         for note in unsynced_notes:
-            if len(note.text) < MAX_NOTE_LENGTH: # add splitting if it is >= MAX_NOTE_LENGTH
-                response = page.add_child(note, HEADERS)
+            if len(note.text) < MAX_NOTE_LENGTH:
+                response = page.add_quote_child(note, HEADERS)
                 synced_notes[pb_notes_pagename].append(note.id)
 
     json.dump(synced_notes, open(f"{PB_NOTES_DIR}/.sync_file.json", "w"))
+    '''

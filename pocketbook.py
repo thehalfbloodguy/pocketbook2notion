@@ -1,13 +1,18 @@
 from bs4 import BeautifulSoup
+from dataclasses import dataclass
+from collections import OrderedDict
+import os
 import re
+import ebooklib
+from ebooklib import epub
 
-# TODO: change to struct?
-class Note():
-    def __init__(self, id, div_class, page_no, text):
-        self.id = id
-        self.div_class = div_class
-        self.page_no = page_no
-        self.text = text.strip()
+
+@dataclass
+class Note:
+    id: str
+    div_class: str
+    page_no: str
+    text: str
 
 class NotesPage():
     def __init__(self, path):
@@ -27,3 +32,25 @@ class NotesPage():
                     page_no = div.find(class_="bm-page").text
                     text = div.find(class_="bm-text").text
                     self.notes.append(Note(id, div_class, page_no, text))
+
+class BookParser:
+    def parse(self, file_path):
+        raise NotImplementedError("Subclasses should implement this method")
+
+class EPUBParser(BookParser):
+    def parse(self, file_path):
+        raise NotImplementedError("No EPUB structure parsing yet")
+
+def parse_book_structure(book_path):
+    if book_path and book_path.endswith('.epub'):
+        parser = EPUBParser()
+        book_structure = parser.parse(book_path)
+        return book_structure
+    return None
+
+def find_book_by_name(directory, book_name):
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if book_name in file:
+                return os.path.join(root, file)
+    return None

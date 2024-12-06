@@ -11,23 +11,19 @@ A project to sync notes from Pocketbook reader to Notion database
 5. Install requirements & run `python main.py`
 
 ### TODOs
-* leave only necessary headers
-* change DB from Playground to real
-* try using slots?
-* option to sync sith PB cloud account if not connected to the reader?
-* sync abstractins' fields with Notion API docs
-* strip requirements.txt (run on empty venv, add venv via PyCharm)
-* add typings, docstrings
-* comply with PEP8 (ahol tools)
-* add DB creation option
-* automate venv creation (maybe even pb_notes_dir creation)
-* prettify README
-* does not make sync file invisible on reader?
-* error handling
-* support for all OS (add Windows, Mac)
-* add links to Usage section
-* different books can have the same name & cause collisions if matched only by name
-* if you export notes & there already is a page for that book - it adds (n) at the end - take it into account
-* turn quote block into "quote" type
-* book structure detection (main formats: fb2, epub) & insert notes according to it
-* split notes over 2000 symbols in length
+- [x] turn quote block into "quote" type
+- [ ] rotation of background colors for quotes?
+- [ ] leave only necessary headers
+- [ ] change DB from Playground to real
+- [ ] option to sync with PB cloud account if not connected to the reader?
+- [ ] sync abstractins' fields with Notion API docs
+- [ ] add typings, docstrings
+- [ ] comply with PEP8 (ahol tools)
+- [ ] prettify README
+- [ ] error handling
+- [ ] support for all OS
+- [ ] add links to Usage section
+- [ ] different books can have the same name & cause collisions if matched only by name
+- [ ] if you export notes & there already is a page for that book - it adds (n) at the end - take it into account
+- [ ] book structure & text detection (main formats: fb2, epub) & insert notes according to it
+- [ ] split notes over 2000 symbols in length
